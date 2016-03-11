@@ -23,9 +23,12 @@
                 <!--</li>-->
             <!--</ul>-->
 
-            <!--<div sec:authorize="isAuthenticated()" class="navbar-form navbar-right">-->
-                <!--<a th:href="@{/logout}" class="btn btn-sm btn-danger">Logout</a>-->
-            <!--</div>-->
+            <div sec:authorize="isAuthenticated()" class="navbar-form navbar-right">
+                <form th:action="@{/logout}" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-sm btn-danger">Logout</button>
+                </form>
+            </div>
 
             <!--<ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">-->
                 <!--<li th:class="${#httpServletRequest.getRequestURI() == '/user/profile' ? 'active':''}">-->
@@ -33,10 +36,10 @@
                 <!--</li>-->
             <!--</ul>-->
 
-            <!--<div sec:authorize="isAnonymous()" class="navbar-form navbar-right">-->
-                <!--<a th:href="@{/login}" class="btn btn-sm btn-success">Iniciar sesión</a>-->
+            <div sec:authorize="isAnonymous()" class="navbar-form navbar-right">
+                <a th:href="@{/login}" class="btn btn-sm btn-success">Iniciar sesión</a>
                 <!--<a th:href="@{/register}" class="btn btn-sm btn-primary">Registro</a>-->
-            <!--</div>-->
+            </div>
         </div>
     </nav>
 
