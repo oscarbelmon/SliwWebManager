@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="page">
+    <head>
+        <meta charset="utf-8"/>
+        <title>SliwWebManager</title>
+        <!-- CSS -->
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    </head>
+
+    <body>
+        <header th:replace="header :: header">Header</header>
+        <section th:include="this :: content" class="container"></section>
+        <!-- JavaScript -->
+        <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script th:include="this :: javascript"></script>
+    </body>
+</html>
