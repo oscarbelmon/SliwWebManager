@@ -14,14 +14,14 @@
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-            <!--<ul class="nav navbar-nav">-->
-                <!--<li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/collection') ? 'active':''}">-->
-                    <!--<a th:href="@{/collection}">Colección</a>-->
-                <!--</li>-->
+            <ul class="nav navbar-nav">
+                <li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/users') ? 'active':''}">
+                    <a th:href="@{/users}">Usuarios</a>
+                </li>
                 <!--<li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/tags') ? 'active':''}">-->
                     <!--<a th:href="@{/tags}">Etiquetas</a>-->
                 <!--</li>-->
-            <!--</ul>-->
+            </ul>
 
             <div sec:authorize="isAuthenticated()" class="navbar-form navbar-right">
                 <form th:action="@{/logout}" method="post">
