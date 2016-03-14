@@ -24,4 +24,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public boolean idExists(String id) {
+        User user = userRepository.findOne(id);
+        return user != null;
+    }
+
 }

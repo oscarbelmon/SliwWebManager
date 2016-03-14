@@ -6,5 +6,6 @@ public interface UserService {
 
     Iterable<User> findAll();
     User save(User user);
+    boolean idExists(String id);
 
 }

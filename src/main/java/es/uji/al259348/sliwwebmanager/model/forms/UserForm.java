@@ -1,6 +1,7 @@
 package es.uji.al259348.sliwwebmanager.model.forms;
 
 import es.uji.al259348.sliwwebmanager.model.User;
+import es.uji.al259348.sliwwebmanager.model.validation.annotations.UserIdAvailable;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class UserForm {
 
     @NotBlank
+    @UserIdAvailable
     private String id;
     @NotBlank
     private String name;
