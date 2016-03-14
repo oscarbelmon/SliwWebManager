@@ -18,9 +18,9 @@
                 <li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/users') ? 'active':''}">
                     <a th:href="@{/users}">Usuarios</a>
                 </li>
-                <!--<li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/tags') ? 'active':''}">-->
-                    <!--<a th:href="@{/tags}">Etiquetas</a>-->
-                <!--</li>-->
+                <li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/devices') ? 'active':''}">
+                    <a th:href="@{/devices}">Dispositivos</a>
+                </li>
             </ul>
 
             <div sec:authorize="isAuthenticated()" class="navbar-form navbar-right">
