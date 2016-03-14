@@ -38,4 +38,13 @@ public class Device {
         this.user = user;
     }
 
+    @Override
+    public String toString() {
+        return "Device{" +
+                "id='" + id + '\'' +
+                ", mac='" + mac + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
 }
