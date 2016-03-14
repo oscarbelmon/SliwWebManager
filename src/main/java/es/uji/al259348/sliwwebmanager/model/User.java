@@ -3,6 +3,7 @@ package es.uji.al259348.sliwwebmanager.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(indexName = "sliw", type = "users")
@@ -17,6 +18,9 @@ public class User {
     private List<String> classifiers; // Classifiers in base64
 
     public User() {
+        this.locations = new ArrayList<>();
+        this.bssids = new ArrayList<>();
+        this.classifiers = new ArrayList<>();
     }
 
     public String getId() {
