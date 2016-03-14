@@ -8,5 +8,6 @@ public interface DeviceService {
 
     Iterable<Device> findAll();
     Device save(Device device);
+    boolean idExists(String id);
 
 }

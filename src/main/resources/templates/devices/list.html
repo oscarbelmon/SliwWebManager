@@ -17,14 +17,12 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>MAC</th>
+                            <th>ID (MAC)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="device : ${devices}">
                             <td th:text="${device.id}"></td>
-                            <td th:text="${device.mac}"></td>
                         </tr>
                     </tbody>
                 </table>

@@ -23,4 +23,10 @@ public class DeviceServiceImpl implements DeviceService {
         return deviceRepository.save(device);
     }
 
+    @Override
+    public boolean idExists(String id) {
+        Device device = deviceRepository.findOne(id);
+        return device != null;
+    }
+
 }
