@@ -1,12 +1,12 @@
 package es.uji.al259348.sliwwebmanager.services;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface DeviceService {
 
-    Iterable<Device> findAll();
+    Page<Device> findAll(Pageable pageable);
     Device save(Device device);
     boolean idExists(String id);
 

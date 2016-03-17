@@ -17,15 +17,58 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID (MAC)</th>
+                            <th style="width: 40%;">ID (MAC)</th>
+                            <th>Nombre</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="device : ${devices}">
+                        <tr th:each="device : ${devicePage}">
                             <td th:text="${device.id}"></td>
+                            <td th:text="${device.name}"></td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="panel-footer">
+                    <div style="float: left;"
+                         th:with="from=${devicePage.number*devicePage.size+1}, to=${from+devicePage.numberOfElements-1}">
+
+                        <p th:text="${'Mostrando '+from+' a '+to+' de '+devicePage.totalElements+' dispositivos.'}"></p>
+                    </div>
+
+                    <div style="float: right;"
+                         th:with="currentPage=${devicePage.number+1},
+                         firstPage=${1}, previousPage=${(devicePage.hasPrevious())?currentPage-1:firstPage},
+                         lastPage=${devicePage.totalPages}, nextPage=${(devicePage.hasNext())?currentPage+1:lastPage}">
+
+                        <a class="btn btn-default"
+                           th:classappend="${!devicePage.hasPrevious()}?'disabled'"
+                           th:href="@{/devices(page=${firstPage})}">
+                            <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                        </a>
+
+                        <a class="btn btn-default"
+                           th:classappend="${!devicePage.hasPrevious()}?'disabled'"
+                           th:href="@{/devices(page=${previousPage})}">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        </a>
+
+                        <span style="margin: 4px;" th:text="${'Página '+currentPage+' de '+devicePage.totalPages}"></span>
+
+                        <a class="btn btn-default"
+                           th:classappend="${!devicePage.hasNext()}?'disabled'"
+                           th:href="@{/devices(page=${nextPage})}">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </a>
+
+                        <a class="btn btn-default"
+                           th:classappend="${!devicePage.hasNext()}?'disabled'"
+                           th:href="@{/devices(page=${lastPage})}">
+                            <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>
