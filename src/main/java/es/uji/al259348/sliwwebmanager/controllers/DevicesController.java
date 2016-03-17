@@ -26,7 +26,7 @@ public class DevicesController {
     @RequestMapping
     public String list(Model model,
                        @RequestParam(required = false, defaultValue = "1") Integer page,
-                       @RequestParam(required = false, defaultValue = "5") Integer size) {
+                       @RequestParam(required = false, defaultValue = "10") Integer size) {
 
         Page<Device> devicePage = deviceService.findAll(new PageRequest(page-1, size));
 
