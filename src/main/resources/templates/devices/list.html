@@ -22,13 +22,16 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr th:if="${devicePage.totalElements}==0">
+                            <td colspan="2">No hay dispositivos.</td>
+                        </tr>
                         <tr th:each="device : ${devicePage}">
                             <td th:text="${device.id}"></td>
                             <td th:text="${device.name}"></td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="panel-footer">
+                <div class="panel-footer" th:if="${devicePage.totalElements}>0">
                     <div style="float: left;"
                          th:with="from=${devicePage.number*devicePage.size+1}, to=${from+devicePage.numberOfElements-1}">
 
