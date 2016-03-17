@@ -19,8 +19,13 @@
                                 <input type="text" class="form-control" th:field="*{id}" />
                                 <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="alert alert-danger"></div>
                             </div>
+                            <div class="form-group">
+                                <label for="name">Nombre:</label>
+                                <input type="text" class="form-control" th:field="*{name}" />
+                                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></div>
+                            </div>
                             <button type="submit" class="btn btn-success">Crear</button>
-                            <a th:href="@{/users}" class="btn btn-danger">Cancelar</a>
+                            <a th:href="@{/devices}" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>
                 </div>

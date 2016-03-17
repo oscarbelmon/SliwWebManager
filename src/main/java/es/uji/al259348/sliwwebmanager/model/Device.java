@@ -8,6 +8,7 @@ public class Device {
 
     @Id
     private String id;
+    private String name;
     private User user;
 
     public Device() {
@@ -19,6 +20,14 @@ public class Device {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public User getUser() {
@@ -33,6 +42,7 @@ public class Device {
     public String toString() {
         return "Device{" +
                 "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", user=" + user +
                 '}';
     }

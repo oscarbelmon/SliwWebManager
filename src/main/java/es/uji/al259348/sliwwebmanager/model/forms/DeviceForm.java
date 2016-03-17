@@ -10,6 +10,9 @@ public class DeviceForm {
     @DeviceIdAvailable
     private String id;
 
+    @NotBlank
+    private String name;
+
     public DeviceForm() {
 
     }
@@ -20,6 +23,14 @@ public class DeviceForm {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -33,6 +44,7 @@ public class DeviceForm {
         Device device = new Device();
 
         device.setId(this.getId());
+        device.setName(this.getName());
 
         return device;
     }
