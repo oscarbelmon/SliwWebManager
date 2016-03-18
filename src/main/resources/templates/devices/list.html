@@ -11,7 +11,27 @@
                     <h1 class="panel-title">Dispositivos</h1>
                 </div>
                 <div class="panel-body">
-                    <a th:href="@{/devices/create}" class="btn btn-success">Crear dispositivo</a>
+                    <div>
+                        <p>
+                            <a th:href="@{/devices/create}" class="btn btn-success">Crear dispositivo</a>
+                        </p>
+                    </div>
+                    <div>
+                        <form action="" method="get" id="" class="form-inline">
+                            <input type="hidden" name="page" th:value="${devicePage.number+1}"/>
+                            <div class="form-group-sm">
+                                <label for="size">Mostrar </label>
+                                <select name="size" id="size" class="form-control" onchange="this.form.submit()">
+                                    <option value="5" th:selected="${devicePage.size==5}">5</option>
+                                    <option value="10" th:selected="${devicePage.size==10}">10</option>
+                                    <option value="15" th:selected="${devicePage.size==15}">15</option>
+                                    <option value="25" th:selected="${devicePage.size==25}">25</option>
+                                    <option value="50" th:selected="${devicePage.size==50}">50</option>
+                                </select>
+                                <label for="size"> entradas.</label>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <!-- Table -->
                 <table class="table table-striped">
