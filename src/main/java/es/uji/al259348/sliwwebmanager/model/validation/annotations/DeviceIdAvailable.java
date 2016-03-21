@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface DeviceIdAvailable {
 
-    String message() default "id not available";
+    String message() default "Identificador ya en uso.";
 
     Class<?>[] groups() default {};
 

@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 
 public class UserForm {
 
-    @NotBlank
+    @NotBlank(message = "No puede estar vacío.")
     @UserIdAvailable
     private String id;
-    @NotBlank
+    @NotBlank(message = "No puede estar vacío.")
     private String name;
     @Valid
-    @NotNull
-    @Size(min = 2)
+    @NotNull(message = "Debes añadir al menos 2 lugares.")
+    @Size(min = 2, message = "Debes añadir al menos 2 lugares.")
     private List<LocationForm> locations;
 
     public UserForm() {

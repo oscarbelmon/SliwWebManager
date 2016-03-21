@@ -5,12 +5,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class LocationForm {
 
-    @NotBlank
+    @NotBlank(message = "No puede estar vacío.")
     private String name;
-    @NotBlank
+    @NotBlank(message = "No puede estar vacío.")
     private String configMsg;
-    @NotBlank
-    private String checkMsg;
 
     public LocationForm() {
 
@@ -32,20 +30,11 @@ public class LocationForm {
         this.configMsg = configMsg;
     }
 
-    public String getCheckMsg() {
-        return checkMsg;
-    }
-
-    public void setCheckMsg(String checkMsg) {
-        this.checkMsg = checkMsg;
-    }
-
     @Override
     public String toString() {
         return "LocationForm{" +
                 "name='" + name + '\'' +
                 ", configMsg='" + configMsg + '\'' +
-                ", checkMsg='" + checkMsg + '\'' +
                 '}';
     }
 
@@ -54,7 +43,6 @@ public class LocationForm {
 
         location.setName(this.getName());
         location.setConfigMsg(this.getConfigMsg());
-        location.setCheckMsg(this.getCheckMsg());
 
         return location;
     }

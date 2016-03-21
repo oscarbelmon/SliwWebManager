@@ -44,10 +44,6 @@
                                                     <input type="text" class="form-control" th:field="*{locations[__${locationStat.index}__].configMsg}" placeholder="Mensaje de configuración" />
                                                     <div th:if="${#fields.hasErrors('locations[__${locationStat.index}__].configMsg')}" th:errors="*{locations[__${locationStat.index}__].configMsg}" class="alert alert-danger"></div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" th:field="*{locations[__${locationStat.index}__].checkMsg}" placeholder="Mensaje de validación" />
-                                                    <div th:if="${#fields.hasErrors('locations[__${locationStat.index}__].checkMsg')}" th:errors="*{locations[__${locationStat.index}__].checkMsg}" class="alert alert-danger"></div>
-                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -73,13 +69,11 @@
 
         var inputName = $('<input type="text" class="form-control" name="locations[' + numLocations + '].name" placeholder="Nombre" />');
         var inputConfigMsg = $('<input type="text" class="form-control" name="locations[' + numLocations + '].configMsg" placeholder="Mensaje de configuración" />');
-        var inputCheckMsg = $('<input type="text" class="form-control" name="locations[' + numLocations + '].checkMsg" placeholder="Mensaje de validación" />');
 
         $('<tr></tr>').appendTo(locationsTableBody)
                 .append($('<td></td>')
                     .append($('<div></div>', { class: 'form-group' }).append(inputName))
                     .append($('<div></div>', { class: 'form-group' }).append(inputConfigMsg))
-                    .append($('<div></div>', { class: 'form-group' }).append(inputCheckMsg))
                 );
 
     }

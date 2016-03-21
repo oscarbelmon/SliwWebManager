@@ -4,7 +4,6 @@ public class Location {
 
     private String name;
     private String configMsg;
-    private String checkMsg;
 
     public Location() {
 
@@ -30,20 +29,11 @@ public class Location {
         this.configMsg = configMsg;
     }
 
-    public String getCheckMsg() {
-        return checkMsg;
-    }
-
-    public void setCheckMsg(String checkMsg) {
-        this.checkMsg = checkMsg;
-    }
-
     @Override
     public String toString() {
         return "Location{" +
                 "name='" + name + '\'' +
                 ", configMsg='" + configMsg + '\'' +
-                ", checkMsg='" + checkMsg + '\'' +
                 '}';
     }
 
