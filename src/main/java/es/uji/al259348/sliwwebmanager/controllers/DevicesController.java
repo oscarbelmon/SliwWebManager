@@ -29,7 +29,9 @@ public class DevicesController {
                        @RequestParam(required = false, defaultValue = "10") Integer size,
                        @RequestParam(required = false, defaultValue = "") String filter) {
 
-        Page<Device> devicePage = deviceService.findAll(new PageRequest(page-1, size));
+        Page<Device> devicePage;
+
+        devicePage = deviceService.findAll(new PageRequest(page-1, size));
 
         model.addAttribute("devicePage", devicePage);
 
