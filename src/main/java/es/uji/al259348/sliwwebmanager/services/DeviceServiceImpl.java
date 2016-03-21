@@ -31,4 +31,10 @@ public class DeviceServiceImpl implements DeviceService {
         return device != null;
     }
 
+    @Override
+    public boolean macExists(String mac) {
+        Device device = deviceRepository.findOneByMac(mac);
+        return device != null;
+    }
+
 }

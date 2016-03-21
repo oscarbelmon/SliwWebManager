@@ -9,5 +9,6 @@ public interface DeviceService {
     Page<Device> findAll(Pageable pageable);
     Device save(Device device);
     boolean idExists(String id);
+    boolean macExists(String mac);
 
 }
