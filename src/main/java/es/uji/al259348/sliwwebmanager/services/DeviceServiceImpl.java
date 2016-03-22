@@ -28,17 +28,6 @@ import java.util.UUID;
 @Service
 public class DeviceServiceImpl implements DeviceService {
 
-    @PostConstruct
-    public void init() {
-        for (int i = 0; i < 50; i++) {
-            Device device = deviceGenerator.generate();
-            deviceRepository.save(device);
-        }
-    }
-
-    @Autowired
-    DeviceGenerator deviceGenerator;
-
     @Autowired
     DeviceRepository deviceRepository;
 
