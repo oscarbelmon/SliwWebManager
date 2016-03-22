@@ -6,6 +6,8 @@ import es.uji.al259348.sliwwebmanager.services.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,13 +29,25 @@ public class DevicesController {
     public String list(Model model,
                        @RequestParam(required = false, defaultValue = "1") Integer page,
                        @RequestParam(required = false, defaultValue = "10") Integer size,
+                       @RequestParam(required = false, defaultValue = "id,asc") String sort,
                        @RequestParam(required = false, defaultValue = "") String filter) {
 
-        Page<Device> devicePage;
+        System.out.println("page="+page+"&size="+size+"&sort="+sort+"&filter="+filter);
 
-        devicePage = deviceService.findAll(new PageRequest(page-1, size));
+        String[] sortd = sort.split(",");
+        String propertie = sortd[0];
+        String direction = sortd[1];
+
+        Pageable pageable = new PageRequest(page-1, size, Sort.Direction.fromString(direction), propertie);
+
+        Page<Device> devicePage;
+        if (filter.isEmpty())
+            devicePage = deviceService.findAll(pageable);
+        else
+            devicePage = deviceService.findHighlighted(pageable, filter);
 
         model.addAttribute("devicePage", devicePage);
+        model.addAttribute("filter", filter);
 
         return "devices/list";
     }

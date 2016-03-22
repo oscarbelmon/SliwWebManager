@@ -9,3 +9,7 @@ body {
     background-color: #fafafa;
     text-align: justify;
 }
+
+em {
+    background-color: #ffff00;
+}
