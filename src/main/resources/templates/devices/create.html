@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="mac">MAC:</label>
-                                <input type="text" class="form-control" th:field="*{mac}" />
+                                <input type="text" class="form-control" th:field="*{mac}" autofocus="autofocus" />
                                 <div th:if="${#fields.hasErrors('mac')}" th:errors="*{mac}" class="alert alert-danger"></div>
                             </div>
                             <div class="form-group">
