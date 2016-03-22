@@ -147,7 +147,7 @@
                             <!--</li>-->
 
                             <li th:each="n : ${#numbers.sequence(firstPage,lastPage)}" th:classappend="${n==currentPage}?'active'">
-                                <a th:href="@{/devices(page=${n})}" th:text="${n}"></a>
+                                <a th:href="@{/devices(page=${n},size=${devicePage.size},filter=${filter})}" th:text="${n}"></a>
                             </li>
 
                             <li>
