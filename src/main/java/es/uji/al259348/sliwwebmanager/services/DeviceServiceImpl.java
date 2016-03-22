@@ -1,16 +1,16 @@
 package es.uji.al259348.sliwwebmanager.services;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
-import es.uji.al259348.sliwwebmanager.repositories.DeviceRepository;
+import es.uji.al259348.sliwwebmanager.model.generation.DeviceGenerator;
+import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.DeviceRepository;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.FilteredQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
-import org.elasticsearch.index.query.WildcardQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.highlight.HighlightBuilder;
+import org.elasticsearch.search.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.FacetedPage;
@@ -20,11 +20,24 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
+
+    @PostConstruct
+    public void init() {
+        for (int i = 0; i < 50; i++) {
+            Device device = deviceGenerator.generate();
+            deviceRepository.save(device);
+        }
+    }
+
+    @Autowired
+    DeviceGenerator deviceGenerator;
 
     @Autowired
     DeviceRepository deviceRepository;
@@ -54,34 +67,46 @@ public class DeviceServiceImpl implements DeviceService {
         return device != null;
     }
 
-    public FacetedPage<Device> findHighlighted(String filter) {
+    @Override
+    public Page<Device> findHighlighted(Pageable pageable, String filter) {
 
         SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(new WildcardQueryBuilder("name", "*"+filter+"*"))
-                .withHighlightFields(new HighlightBuilder.Field("name"))
-                .build();
+                .withQuery(
+                        new MultiMatchQueryBuilder(filter, "name", "mac")
+                                .operator(MatchQueryBuilder.Operator.AND)
+                )
+                .withHighlightFields(
+                        new HighlightBuilder.Field("name"),
+                        new HighlightBuilder.Field("mac")
+                )
+                .build().setPageable(pageable);
 
-        FacetedPage<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new SearchResultMapper() {
+        Page<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new SearchResultMapper() {
             @Override
             public <T> FacetedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable) {
 
                 List<Device> chunk = new ArrayList<>();
                 for (SearchHit searchHit : response.getHits()) {
-                    if (response.getHits().getHits().length <= 0) {
-                        return null;
-                    }
+
+                    String sourceName = searchHit.getSource().get("name").toString();
+                    String sourceMac = searchHit.getSource().get("mac").toString();
+
+                    HighlightField highlightName = searchHit.getHighlightFields().get("name");
+                    HighlightField highlightMac = searchHit.getHighlightFields().get("mac");
+
+                    String name = (highlightName != null) ? highlightName.fragments()[0].toString() : sourceName;
+                    String mac = (highlightMac != null) ? highlightMac.fragments()[0].toString() : sourceMac;
+
                     Device device = new Device();
                     device.setId(searchHit.getId());
-                    device.setMac((String) searchHit.getSource().get("mac"));
-                    device.setName(searchHit.getHighlightFields().get("name").fragments()[0].toString());
+                    device.setMac(mac);
+                    device.setName(name);
                     chunk.add(device);
                 }
 
-                if (chunk.size() > 0) {
-                    return new FacetedPageImpl<T>((List<T>) chunk);
-                }
-
-                return new FacetedPageImpl<T>((List<T>) chunk);
+                List<T> content = (List<T>) chunk;
+                long total = response.getHits().getTotalHits();
+                return new FacetedPageImpl<>(content, pageable, total);
             }
         });
 
