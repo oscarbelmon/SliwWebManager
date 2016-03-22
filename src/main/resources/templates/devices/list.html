@@ -21,7 +21,7 @@
                 <div class="panel-body clearfix">
 
                     <form action="" method="get" id="form" class="form-inline">
-                        <input type="hidden" name="page" th:value="${devicePage.number+1}"/>
+                        <input type="hidden" name="page" id="page" th:value="${devicePage.number+1}"/>
 
                         <div class="pull-left">
                             <div class="form-group">
@@ -123,6 +123,12 @@
                         <!--</a>-->
                     <!--</div>-->
 
+                    <!--<li>-->
+                    <!--<span>-->
+                    <!--<span aria-hidden="true">&hellip;</span>-->
+                    <!--</span>-->
+                    <!--</li>-->
+
                     <nav class="pull-right"
                          th:with="currentPage=${devicePage.number+1},
                          firstPage=${1}, previousPage=${(devicePage.hasPrevious())?currentPage-1:firstPage},
@@ -130,33 +136,27 @@
 
                         <ul class="pagination" style="margin:0px;">
                             <li>
-                                <a href="#" aria-label="First" th:href="@{/devices(page=${firstPage})}">
+                                <a class="pageBtn" th:value="${firstPage}" aria-label="First">
                                     <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" aria-label="Previous" th:href="@{/devices(page=${previousPage})}">
+                                <a class="pageBtn" th:value="${previousPage}" aria-label="Previous">
                                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                 </a>
                             </li>
 
-                            <!--<li>-->
-                                <!--<span>-->
-                                    <!--<span aria-hidden="true">&hellip;</span>-->
-                                <!--</span>-->
-                            <!--</li>-->
-
                             <li th:each="n : ${#numbers.sequence(firstPage,lastPage)}" th:classappend="${n==currentPage}?'active'">
-                                <a th:href="@{/devices(page=${n},size=${devicePage.size},filter=${filter})}" th:text="${n}"></a>
+                                <a class="pageBtn" th:value="${n}" th:text="${n}"></a>
                             </li>
 
                             <li>
-                                <a href="#" aria-label="Next" th:href="@{/devices(page=${nextPage})}">
+                                <a class="pageBtn" th:value="${nextPage}" aria-label="Next">
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#" aria-label="Last" th:href="@{/devices(page=${lastPage})}">
+                                <a class="pageBtn" th:value="${lastPage}" aria-label="Last">
                                     <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
                                 </a>
                             </li>
@@ -176,19 +176,20 @@
     });
 
     $('#size').change(function(e) {
+        $('#page').val('');
         $('#form').submit();
     });
 
     $('#btnFilter').click(function(e) {
+        $('#page').val('');
         $('#form').submit();
     });
 
-//    $(document).ready(function() {
-//        $('#example').DataTable({
-////            serverSide: true,
-////            ajax: /*[[@{/devices}]]*/ ''
-//        });
-//    } );
+    $('.pageBtn').click(function(e) {
+        $('#page').val($(this).attr('value'));
+        $('#form').submit();
+    });
+
 </script>
 
 </html>

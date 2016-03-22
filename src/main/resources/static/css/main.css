@@ -13,3 +13,7 @@ body {
 em {
     background-color: #ffff00;
 }
+
+.pageBtn {
+    cursor: pointer;
+}
