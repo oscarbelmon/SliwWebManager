@@ -7,11 +7,19 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title">Usuarios</h1>
+                <div class="panel-heading clearfix">
+                    <div class="pull-left" style="margin-top:2px;">
+                        <h1 class="panel-title">Usuarios</h1>
+                    </div>
+                    <div class="pull-right">
+                        <!--<a th:href="@{/devices/create}" class="btn btn-sm btn-success">Crear dispositivo</a>-->
+                        <a th:href="@{/users/create}" class="btn btn-xs btn-success" title="Crear usuario">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </a>
+                    </div>
                 </div>
                 <div class="panel-body">
-                    <a th:href="@{/users/create}" class="btn btn-success">Crear usuario</a>
+
                 </div>
                 <!-- Table -->
                 <table class="table table-striped">
@@ -22,6 +30,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr th:if="${users.totalElements}==0">
+                            <td colspan="2">No hay usuarios.</td>
+                        </tr>
                         <tr th:each="user : ${users}">
                             <td th:text="${user.id}"></td>
                             <td th:text="${user.name}"></td>
