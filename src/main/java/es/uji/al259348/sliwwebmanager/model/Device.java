@@ -1,17 +1,15 @@
 package es.uji.al259348.sliwwebmanager.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 
 @Document(indexName = "sliw", type = "devices")
+@Setting(settingPath = "elasticsearch/settings.json")
+@Mapping(mappingPath = "elasticsearch/mappings.json")
 public class Device {
 
     @Id
     private String id;
-    @Field(index = FieldIndex.not_analyzed, type = FieldType.String)
     private String mac;
     private String name;
     private User user;

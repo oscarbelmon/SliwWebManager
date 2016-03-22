@@ -1,0 +1,56 @@
+{
+  "analysis": {
+    "tokenizer": {
+      "ngram_tokenizer": {
+        "type": "nGram",
+        "min_gram": "2",
+        "max_gram": "25",
+        "token_chars": [
+          "letter",
+          "digit"
+        ]
+      },
+      "mac_tokenizer": {
+        "type": "nGram",
+        "min_gram": "2",
+        "max_gram": "17",
+        "token_chars": [
+          "letter",
+          "digit",
+          "symbol",
+          "punctuation"
+        ]
+      }
+    },
+    "analyzer": {
+      "index_ngram_analyzer": {
+        "type": "custom",
+        "tokenizer": "ngram_tokenizer",
+        "filter": [
+          "lowercase"
+        ]
+      },
+      "search_term_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase"
+        ]
+      },
+      "index_mac_analyzer": {
+        "type": "custom",
+        "tokenizer": "mac_tokenizer",
+        "filter": [
+          "lowercase"
+        ]
+      },
+      "search_mac_analyzer": {
+        "type": "custom",
+        "tokenizer": "keyword",
+        "filter": [
+          "lowercase"
+        ]
+      }
+    }
+  }
+}
