@@ -1,12 +1,9 @@
 package es.uji.al259348.sliwwebmanager.services;
 
 import es.uji.al259348.sliwwebmanager.model.User;
-import es.uji.al259348.sliwwebmanager.repositories.UserRepository;
-import org.apache.commons.collections.IteratorUtils;
+import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {

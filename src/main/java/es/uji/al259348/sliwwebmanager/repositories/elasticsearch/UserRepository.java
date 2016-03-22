@@ -1,4 +1,4 @@
-package es.uji.al259348.sliwwebmanager.repositories;
+package es.uji.al259348.sliwwebmanager.repositories.elasticsearch;
 
 import es.uji.al259348.sliwwebmanager.model.User;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
