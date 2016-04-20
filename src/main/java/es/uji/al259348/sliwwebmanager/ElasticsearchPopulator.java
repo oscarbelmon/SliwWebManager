@@ -2,8 +2,8 @@ package es.uji.al259348.sliwwebmanager;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
 import es.uji.al259348.sliwwebmanager.model.User;
-import es.uji.al259348.sliwwebmanager.model.generation.DeviceGenerator;
-import es.uji.al259348.sliwwebmanager.model.generation.UserGenerator;
+import es.uji.al259348.sliwwebmanager.model.generators.DeviceGenerator;
+import es.uji.al259348.sliwwebmanager.model.generators.UserGenerator;
 import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.DeviceRepository;
 import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

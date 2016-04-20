@@ -1,4 +1,4 @@
-package es.uji.al259348.sliwwebmanager.model.generation;
+package es.uji.al259348.sliwwebmanager.model.generators;
 
 import org.springframework.stereotype.Component;
 

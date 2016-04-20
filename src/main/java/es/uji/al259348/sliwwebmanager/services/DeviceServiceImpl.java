@@ -1,7 +1,6 @@
 package es.uji.al259348.sliwwebmanager.services;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
-import es.uji.al259348.sliwwebmanager.model.generation.DeviceGenerator;
 import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.DeviceRepository;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
@@ -10,7 +9,6 @@ import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.elasticsearch.search.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.FacetedPage;
@@ -20,10 +18,8 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
