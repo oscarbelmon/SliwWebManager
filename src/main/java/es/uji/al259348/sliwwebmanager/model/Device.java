@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.*;
 
 @Document(indexName = "sliw", type = "devices")
 @Setting(settingPath = "elasticsearch/settings.json")
-@Mapping(mappingPath = "elasticsearch/mappings.json")
+@Mapping(mappingPath = "elasticsearch/mappings.devices.json")
 public class Device {
 
     @Id
