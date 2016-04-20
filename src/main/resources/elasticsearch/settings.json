@@ -27,14 +27,16 @@
         "type": "custom",
         "tokenizer": "ngram_tokenizer",
         "filter": [
-          "lowercase"
+          "lowercase",
+          "asciifolding"
         ]
       },
       "search_term_analyzer": {
         "type": "custom",
         "tokenizer": "standard",
         "filter": [
-          "lowercase"
+          "lowercase",
+          "asciifolding"
         ]
       },
       "index_mac_analyzer": {
