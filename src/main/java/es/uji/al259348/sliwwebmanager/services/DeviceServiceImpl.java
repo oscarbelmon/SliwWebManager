@@ -1,25 +1,21 @@
 package es.uji.al259348.sliwwebmanager.services;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
+import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.DeviceHighlightSearchResultMapper;
 import es.uji.al259348.sliwwebmanager.repositories.elasticsearch.DeviceRepository;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.*;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.highlight.HighlightBuilder;
-import org.elasticsearch.search.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.FacetedPage;
-import org.springframework.data.elasticsearch.core.FacetedPageImpl;
-import org.springframework.data.elasticsearch.core.SearchResultMapper;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
@@ -60,45 +56,21 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public Page<Device> findHighlighted(Pageable pageable, String filter) {
 
+        String[] fields = new String[] { "name", "mac" };
+
+        QueryBuilder queryBuilder = new MultiMatchQueryBuilder(filter, fields)
+                .operator(MatchQueryBuilder.Operator.AND);
+
+        HighlightBuilder.Field[] highlightFields = Arrays.stream(fields)
+                .map(HighlightBuilder.Field::new)
+                .toArray(HighlightBuilder.Field[]::new);
+
         SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(
-                        new MultiMatchQueryBuilder(filter, "name", "mac")
-                                .operator(MatchQueryBuilder.Operator.AND)
-                )
-                .withHighlightFields(
-                        new HighlightBuilder.Field("name"),
-                        new HighlightBuilder.Field("mac")
-                )
+                .withQuery(queryBuilder)
+                .withHighlightFields(highlightFields)
                 .build().setPageable(pageable);
 
-        Page<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new SearchResultMapper() {
-            @Override
-            public <T> FacetedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable) {
-
-                List<Device> chunk = new ArrayList<>();
-                for (SearchHit searchHit : response.getHits()) {
-
-                    String sourceName = searchHit.getSource().get("name").toString();
-                    String sourceMac = searchHit.getSource().get("mac").toString();
-
-                    HighlightField highlightName = searchHit.getHighlightFields().get("name");
-                    HighlightField highlightMac = searchHit.getHighlightFields().get("mac");
-
-                    String name = (highlightName != null) ? highlightName.fragments()[0].toString() : sourceName;
-                    String mac = (highlightMac != null) ? highlightMac.fragments()[0].toString() : sourceMac;
-
-                    Device device = new Device();
-                    device.setId(searchHit.getId());
-                    device.setMac(mac);
-                    device.setName(name);
-                    chunk.add(device);
-                }
-
-                List<T> content = (List<T>) chunk;
-                long total = response.getHits().getTotalHits();
-                return new FacetedPageImpl<>(content, pageable, total);
-            }
-        });
+        Page<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new DeviceHighlightSearchResultMapper());
 
         return page;
     }
