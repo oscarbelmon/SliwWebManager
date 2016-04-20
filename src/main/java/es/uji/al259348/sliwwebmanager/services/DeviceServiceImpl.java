@@ -31,8 +31,15 @@ public class DeviceServiceImpl implements DeviceService {
     ElasticsearchTemplate elasticsearchTemplate;
 
     @Override
-    public Page<Device> findAll(Pageable pageable) {
-        return deviceRepository.findAll(pageable);
+    public boolean idExists(String id) {
+        Device device = deviceRepository.findOne(id);
+        return device != null;
+    }
+
+    @Override
+    public boolean macExists(String mac) {
+        Device device = deviceRepository.findOneByMac(mac);
+        return device != null;
     }
 
     @Override
@@ -46,15 +53,8 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public boolean idExists(String id) {
-        Device device = deviceRepository.findOne(id);
-        return device != null;
-    }
-
-    @Override
-    public boolean macExists(String mac) {
-        Device device = deviceRepository.findOneByMac(mac);
-        return device != null;
+    public Page<Device> findAll(Pageable pageable) {
+        return deviceRepository.findAll(pageable);
     }
 
     @Override
