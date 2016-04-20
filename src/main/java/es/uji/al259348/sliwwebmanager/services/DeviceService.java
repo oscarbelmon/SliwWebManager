@@ -6,10 +6,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface DeviceService {
 
-    Page<Device> findAll(Pageable pageable);
-    Page<Device> findHighlighted(Pageable pageable, String filter);
-    Device save(Device device);
     boolean idExists(String id);
     boolean macExists(String mac);
+
+    Device save(Device device);
+    Device findOne(String id);
+
+    Page<Device> findAll(Pageable pageable);
+    Page<Device> findHighlighted(Pageable pageable, String filter);
 
 }

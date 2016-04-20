@@ -41,6 +41,11 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public Device findOne(String id) {
+        return deviceRepository.findOne(id);
+    }
+
+    @Override
     public boolean idExists(String id) {
         Device device = deviceRepository.findOne(id);
         return device != null;

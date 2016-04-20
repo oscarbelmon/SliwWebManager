@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,5 +81,14 @@ public class DevicesController {
         return "redirect:/devices";
     }
 
+    @RequestMapping(path = "{id}")
+    public String view(Model model, @PathVariable String id) {
+
+        Device device = deviceService.findOne(id);
+
+        model.addAttribute("device", device);
+
+        return "devices/view";
+    }
 
 }
