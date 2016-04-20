@@ -4,11 +4,16 @@ import es.uji.al259348.sliwwebmanager.model.User;
 import es.uji.al259348.sliwwebmanager.model.forms.UserForm;
 import es.uji.al259348.sliwwebmanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -21,9 +26,27 @@ public class UsersController {
     UserService userService;
 
     @RequestMapping
-    public String list(Model model) {
-        Iterable<User> users = userService.findAll();
-        model.addAttribute("users", users);
+    public String list(Model model,
+                       @RequestParam(required = false, defaultValue = "1") Integer page,
+                       @RequestParam(required = false, defaultValue = "10") Integer size,
+                       @RequestParam(required = false, defaultValue = "id,asc") String sort,
+                       @RequestParam(required = false, defaultValue = "") String filter) {
+
+        String[] sortd = sort.split(",");
+        String propertie = sortd[0];
+        String direction = sortd[1];
+
+        Pageable pageable = new PageRequest(page-1, size, Sort.Direction.fromString(direction), propertie);
+
+        Page<User> userPage;
+        if (filter.isEmpty())
+            userPage = userService.findAll(pageable);
+        else
+            userPage = userService.findHighlighted(pageable, filter);
+
+        model.addAttribute("userPage", userPage);
+        model.addAttribute("filter", filter);
+
         return "users/list";
     }
 
