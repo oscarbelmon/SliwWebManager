@@ -4,6 +4,13 @@
       th:include="base :: page">
 
 <div th:fragment="content">
+
+    <ol class="breadcrumb">
+        <li class="active">Dispositivos</li>
+    </ol>
+
+    <div th:replace="feedback :: feedback"></div>
+
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="panel panel-default">
@@ -26,7 +33,7 @@
                         <div class="pull-left">
                             <div class="form-group">
                                 <label for="size">Mostrar </label>
-                                <select name="size" id="size" class="form-control input-sm">
+                                <select id="size" name="size" class="form-control input-sm">
                                     <option value="5" th:selected="${devicePage.size==5}">5</option>
                                     <option value="10" th:selected="${devicePage.size==10}">10</option>
                                     <option value="15" th:selected="${devicePage.size==15}">15</option>
@@ -69,7 +76,7 @@
                             <td th:text="${device.id}"></td>
                             <td th:utext="${device.mac}"></td>
                             <td th:utext="${device.name}"></td>
-                            <td th:text="${(device.user != null) ? nulldevice.user.id : 'No'}"></td>
+                            <td th:text="${(device.user != null) ? device.user.id : 'No'}"></td>
                             <td>
                                 <a class="btn btn-xs btn-primary" aria-label="Ver" title="Ver" th:href="@{/devices/{id}(id=${device.id})}">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -85,83 +92,14 @@
                     </tbody>
                 </table>
                 <div class="panel-footer clearfix" th:if="${devicePage.totalElements}>0">
-                    <div class="pull-left"
-                         th:with="from=${devicePage.number*devicePage.size+1}, to=${from+devicePage.numberOfElements-1}">
 
-                        <p th:text="${'Mostrando '+from+' a '+to+' de '+devicePage.totalElements+' dispositivos.'}"></p>
+                    <div class="pull-left" th:with="page=${devicePage}">
+                        <div th:replace="pagination :: paginationInfo"></div>
                     </div>
 
-                    <!--<div class="pull-right"-->
-                         <!--th:with="currentPage=${devicePage.number+1},-->
-                         <!--firstPage=${1}, previousPage=${(devicePage.hasPrevious())?currentPage-1:firstPage},-->
-                         <!--lastPage=${devicePage.totalPages}, nextPage=${(devicePage.hasNext())?currentPage+1:lastPage}">-->
-
-                        <!--<a class="btn btn-default"-->
-                           <!--th:classappend="${!devicePage.hasPrevious()}?'disabled'"-->
-                           <!--th:href="@{/devices(page=${firstPage})}">-->
-                            <!--<span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>-->
-                        <!--</a>-->
-
-                        <!--<a class="btn btn-default"-->
-                           <!--th:classappend="${!devicePage.hasPrevious()}?'disabled'"-->
-                           <!--th:href="@{/devices(page=${previousPage})}">-->
-                            <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
-                        <!--</a>-->
-
-                        <!--<span style="margin: 4px;" th:text="${'Página '+currentPage+' de '+devicePage.totalPages}"></span>-->
-
-                        <!--<a class="btn btn-default"-->
-                           <!--th:classappend="${!devicePage.hasNext()}?'disabled'"-->
-                           <!--th:href="@{/devices(page=${nextPage})}">-->
-                            <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
-                        <!--</a>-->
-
-                        <!--<a class="btn btn-default"-->
-                           <!--th:classappend="${!devicePage.hasNext()}?'disabled'"-->
-                           <!--th:href="@{/devices(page=${lastPage})}">-->
-                            <!--<span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>-->
-                        <!--</a>-->
-                    <!--</div>-->
-
-                    <!--<li>-->
-                    <!--<span>-->
-                    <!--<span aria-hidden="true">&hellip;</span>-->
-                    <!--</span>-->
-                    <!--</li>-->
-
-                    <nav class="pull-right"
-                         th:with="currentPage=${devicePage.number+1},
-                         firstPage=${1}, previousPage=${(devicePage.hasPrevious())?currentPage-1:firstPage},
-                         lastPage=${devicePage.totalPages}, nextPage=${(devicePage.hasNext())?currentPage+1:lastPage}">
-
-                        <ul class="pagination" style="margin:0px;">
-                            <li>
-                                <a class="pageBtn" th:value="${firstPage}" aria-label="First">
-                                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pageBtn" th:value="${previousPage}" aria-label="Previous">
-                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                </a>
-                            </li>
-
-                            <li th:each="n : ${#numbers.sequence(firstPage,lastPage)}" th:classappend="${n==currentPage}?'active'">
-                                <a class="pageBtn" th:value="${n}" th:text="${n}"></a>
-                            </li>
-
-                            <li>
-                                <a class="pageBtn" th:value="${nextPage}" aria-label="Next">
-                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pageBtn" th:value="${lastPage}" aria-label="Last">
-                                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div class="pull-right" th:with="page=${devicePage}">
+                        <nav th:replace="pagination :: paginationNav"></nav>
+                    </div>
 
                 </div>
             </div>

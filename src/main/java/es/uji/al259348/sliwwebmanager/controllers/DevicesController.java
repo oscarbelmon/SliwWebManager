@@ -1,8 +1,10 @@
 package es.uji.al259348.sliwwebmanager.controllers;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
+import es.uji.al259348.sliwwebmanager.model.User;
 import es.uji.al259348.sliwwebmanager.model.forms.DeviceForm;
 import es.uji.al259348.sliwwebmanager.services.DeviceService;
+import es.uji.al259348.sliwwebmanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -25,6 +28,9 @@ public class DevicesController {
 
     @Autowired
     DeviceService deviceService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping
     public String list(Model model,
@@ -82,13 +88,100 @@ public class DevicesController {
     }
 
     @RequestMapping(path = "{id}")
-    public String view(Model model, @PathVariable String id) {
+    public String view(Model model,
+                       RedirectAttributes redirectAttributes,
+                       @PathVariable String id) {
 
         Device device = deviceService.findOne(id);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + id);
+            return "redirect:/devices";
+        }
 
         model.addAttribute("device", device);
 
         return "devices/view";
+    }
+
+    @RequestMapping(path = "{id}/linkUser")
+    public String linkUser(Model model,
+                           RedirectAttributes redirectAttributes,
+                           @PathVariable String id,
+                           @RequestParam(required = false, defaultValue = "1") Integer page,
+                           @RequestParam(required = false, defaultValue = "10") Integer size,
+                           @RequestParam(required = false, defaultValue = "id,asc") String sort,
+                           @RequestParam(required = false, defaultValue = "") String filter) {
+
+        Device device = deviceService.findOne(id);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + id);
+            return "redirect:/devices";
+        }
+
+        String[] sortd = sort.split(",");
+        String propertie = sortd[0];
+        String direction = sortd[1];
+
+        Pageable pageable = new PageRequest(page-1, size, Sort.Direction.fromString(direction), propertie);
+
+        Page<User> userPage;
+        if (filter.isEmpty())
+            userPage = userService.findAll(pageable);
+        else
+            userPage = userService.findHighlighted(pageable, filter);
+
+        model.addAttribute("userPage", userPage);
+        model.addAttribute("filter", filter);
+        model.addAttribute("device", device);
+
+        return "devices/linkUser";
+    }
+
+    @RequestMapping(path = "{deviceId}/linkUser", method = RequestMethod.POST)
+    public String linkUser(RedirectAttributes redirectAttributes,
+                           @PathVariable String deviceId,
+                           @RequestParam String userId) {
+
+        Device device = deviceService.findOne(deviceId);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + deviceId);
+            return "redirect:/devices";
+        }
+
+        User user = userService.findOne(userId);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el usuario con identificador: " + userId);
+            return "redirect:/devices/" + deviceId;
+        }
+
+        device.setUser(user);
+        deviceService.save(device);
+        redirectAttributes.addFlashAttribute("success", "Ha sido vinculado el usuario con identificador: " + userId);
+
+        return "redirect:/devices/" + deviceId;
+    }
+
+    @RequestMapping(path = "{deviceId}/unlinkUser")
+    public String linkUser(RedirectAttributes redirectAttributes,
+                           @PathVariable String deviceId) {
+
+        Device device = deviceService.findOne(deviceId);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + deviceId);
+            return "redirect:/devices";
+        }
+
+        User currentUser = device.getUser();
+        if (currentUser == null) {
+            redirectAttributes.addFlashAttribute("error", "El usuario no tiene ningún usuario vinculado.");
+            return "redirect:/devices/" + deviceId;
+        }
+
+        device.setUser(null);
+        deviceService.save(device);
+        redirectAttributes.addFlashAttribute("success", "Ha sido desvinculado el usuario con identificador: " + currentUser.getId());
+
+        return "redirect:/devices/" + deviceId;
     }
 
 }

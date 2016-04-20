@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="paginationInfo"
+         th:with="from=${page.number*page.size+1}, to=${from+page.numberOfElements-1}">
+
+        <p th:text="${'Mostrando '+from+' a '+to+' de '+page.totalElements+' entradas.'}"></p>
+
+    </div>
+
+    <nav th:fragment="paginationNav"
+         th:with="currentPage=${page.number+1},
+            firstPage=${1},
+            previousPage=${(page.hasPrevious())?currentPage-1:firstPage},
+            lastPage=${page.totalPages},
+            nextPage=${(page.hasNext())?currentPage+1:lastPage}">
+
+        <ul class="pagination" style="margin:0px;">
+            <li>
+                <a class="pageBtn" th:value="${firstPage}" aria-label="First">
+                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                </a>
+            </li>
+            <li>
+                <a class="pageBtn" th:value="${previousPage}" aria-label="Previous">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+            </li>
+
+            <li th:each="n : ${#numbers.sequence(firstPage,lastPage)}" th:classappend="${n==currentPage}?'active'">
+                <a class="pageBtn" th:value="${n}" th:text="${n}"></a>
+            </li>
+
+            <li>
+                <a class="pageBtn" th:value="${nextPage}" aria-label="Next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </a>
+            </li>
+            <li>
+                <a class="pageBtn" th:value="${lastPage}" aria-label="Last">
+                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+</html>
