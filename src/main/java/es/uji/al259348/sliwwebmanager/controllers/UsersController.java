@@ -11,9 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -76,6 +78,22 @@ public class UsersController {
         userService.save(user);
 
         return "redirect:/users";
+    }
+
+    @RequestMapping(path = "{id}")
+    public String view(Model model,
+                       RedirectAttributes redirectAttributes,
+                       @PathVariable String id) {
+
+        User user = userService.findOne(id);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el usuario con identificador: " + id);
+            return "redirect:/users";
+        }
+
+        model.addAttribute("user", user);
+
+        return "users/view";
     }
 
 }
