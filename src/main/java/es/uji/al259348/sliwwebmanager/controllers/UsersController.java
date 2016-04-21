@@ -1,6 +1,7 @@
 package es.uji.al259348.sliwwebmanager.controllers;
 
 import es.uji.al259348.sliwwebmanager.model.User;
+import es.uji.al259348.sliwwebmanager.model.forms.EditUserForm;
 import es.uji.al259348.sliwwebmanager.model.forms.UserForm;
 import es.uji.al259348.sliwwebmanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,51 @@ public class UsersController {
         model.addAttribute("user", user);
 
         return "users/view";
+    }
+
+    @RequestMapping(path = "{id}/edit")
+    public String edit(Model model,
+                       RedirectAttributes redirectAttributes,
+                       @PathVariable String id) {
+
+        User user = userService.findOne(id);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el usuario con identificador: " + id);
+            return "redirect:/users";
+        }
+
+        model.addAttribute("user", user);
+
+        EditUserForm editUserForm = new EditUserForm(user);
+        model.addAttribute("editUserForm", editUserForm);
+
+        return "users/edit";
+    }
+
+    @RequestMapping(path = "{id}/edit", method = RequestMethod.POST)
+    public String editAction(Model model,
+                             RedirectAttributes redirectAttributes,
+                             @PathVariable String id,
+                             @Valid EditUserForm editUserForm,
+                             BindingResult bindingResult) {
+
+        User user = userService.findOne(id);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el usuario con identificador: " + id);
+            return "redirect:/users";
+        }
+
+        model.addAttribute("user", user);
+
+        if (bindingResult.hasErrors()) {
+            return "users/edit";
+        }
+
+        editUserForm.update(user);
+        userService.save(user);
+        redirectAttributes.addFlashAttribute("success", "El usuario ha sido actualizado correctamente.");
+
+        return "redirect:/users/" + id;
     }
 
 }
