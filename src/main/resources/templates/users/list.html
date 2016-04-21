@@ -74,8 +74,16 @@
                     <tr th:each="user : ${userPage}">
                         <td th:text="${user.id}"></td>
                         <td th:utext="${user.name}"></td>
-                        <td th:utext="${user.configured}"></td>
-                        <!--<td th:text="${(device.user != null) ? nulldevice.user.id : 'No'}"></td>-->
+                        <td>
+                            <span class="label label-success" th:if="${user.configured}">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                <span>Sí</span>
+                            </span>
+                            <span class="label label-danger" th:if="!${user.configured}">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span>No</span>
+                            </span>
+                        </td>
                         <td>
                             <a class="btn btn-xs btn-primary" aria-label="Ver" title="Ver" th:href="@{/users/{id}(id=${user.id})}">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

@@ -64,7 +64,7 @@
                             <th style="width: 30%;">ID</th>
                             <th style="width: 15%;">MAC</th>
                             <th>Nombre</th>
-                            <th style="width: 15%;">Usuario asignado</th>
+                            <th style="width: 15%;">Usuario vinculado</th>
                             <th style="width: 100px;">Opciones</th>
                         </tr>
                     </thead>
@@ -76,7 +76,16 @@
                             <td th:text="${device.id}"></td>
                             <td th:utext="${device.mac}"></td>
                             <td th:utext="${device.name}"></td>
-                            <td th:text="${(device.user != null) ? device.user.id : 'No'}"></td>
+                            <td>
+                                <span class="label label-success" th:if="${(device.user != null)}">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    <span>Sí</span>
+                                </span>
+                                <span class="label label-danger" th:if="!${(device.user != null)}">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span>No</span>
+                                </span>
+                            </td>
                             <td>
                                 <a class="btn btn-xs btn-primary" aria-label="Ver" title="Ver" th:href="@{/devices/{id}(id=${device.id})}">
                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

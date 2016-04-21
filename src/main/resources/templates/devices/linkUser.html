@@ -19,7 +19,7 @@
                 <div class="panel-heading clearfix">
                     <div class="pull-left">
                         <h1 class="panel-title">
-                            <strong>Vincular usuario a </strong>
+                            <span>Vincular usuario a </span>
                             <i th:text="${device.name}"></i>
                         </h1>
                     </div>
@@ -75,8 +75,16 @@
                         <tr th:each="user : ${userPage}">
                             <td th:text="${user.id}"></td>
                             <td th:utext="${user.name}"></td>
-                            <td th:utext="${user.configured}"></td>
-                            <!--<td th:text="${(device.user != null) ? nulldevice.user.id : 'No'}"></td>-->
+                            <td>
+                                <span class="label label-success" th:if="${user.configured}">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                    <span>Sí</span>
+                                </span>
+                                <span class="label label-danger" th:if="!${user.configured}">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span>No</span>
+                                </span>
+                            </td>
                             <td>
                                 <form th:action="@{/devices/{id}/linkUser(id=${device.id})}" method="post">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
