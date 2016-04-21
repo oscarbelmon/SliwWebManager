@@ -1,4 +1,4 @@
-package es.uji.al259348.sliwwebmanager;
+package es.uji.al259348.sliwwebmanager.repositories.elasticsearch;
 
 import es.uji.al259348.sliwwebmanager.model.Device;
 import es.uji.al259348.sliwwebmanager.model.User;
