@@ -173,7 +173,7 @@ public class DevicesController {
 
         User currentUser = device.getUser();
         if (currentUser == null) {
-            redirectAttributes.addFlashAttribute("error", "El usuario no tiene ningún usuario vinculado.");
+            redirectAttributes.addFlashAttribute("error", "El dispositivo no tiene ningún usuario vinculado.");
             return "redirect:/devices/" + deviceId;
         }
 
