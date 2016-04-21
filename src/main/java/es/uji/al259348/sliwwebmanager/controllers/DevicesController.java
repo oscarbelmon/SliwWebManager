@@ -3,6 +3,7 @@ package es.uji.al259348.sliwwebmanager.controllers;
 import es.uji.al259348.sliwwebmanager.model.Device;
 import es.uji.al259348.sliwwebmanager.model.User;
 import es.uji.al259348.sliwwebmanager.model.forms.DeviceForm;
+import es.uji.al259348.sliwwebmanager.model.forms.EditDeviceForm;
 import es.uji.al259348.sliwwebmanager.services.DeviceService;
 import es.uji.al259348.sliwwebmanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,51 @@ public class DevicesController {
         model.addAttribute("device", device);
 
         return "devices/view";
+    }
+
+    @RequestMapping(path = "{id}/edit")
+    public String edit(Model model,
+                       RedirectAttributes redirectAttributes,
+                       @PathVariable String id) {
+
+        Device device = deviceService.findOne(id);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + id);
+            return "redirect:/devices";
+        }
+
+        model.addAttribute("device", device);
+
+        EditDeviceForm editDeviceForm = new EditDeviceForm(device);
+        model.addAttribute("editDeviceForm", editDeviceForm);
+
+        return "devices/edit";
+    }
+
+    @RequestMapping(path = "{id}/edit", method = RequestMethod.POST)
+    public String editAction(Model model,
+                             RedirectAttributes redirectAttributes,
+                             @PathVariable String id,
+                             @Valid EditDeviceForm editDeviceForm,
+                             BindingResult bindingResult) {
+
+        Device device = deviceService.findOne(id);
+        if (device == null) {
+            redirectAttributes.addFlashAttribute("error", "No existe el dispositivo con identificador: " + id);
+            return "redirect:/devices";
+        }
+
+        model.addAttribute("device", device);
+
+        if (bindingResult.hasErrors()) {
+            return "devices/edit";
+        }
+
+        editDeviceForm.update(device);
+        deviceService.save(device);
+        redirectAttributes.addFlashAttribute("success", "El dispositivo ha sido actualizado correctamente.");
+
+        return "redirect:/devices/" + id;
     }
 
     @RequestMapping(path = "{id}/linkUser")
