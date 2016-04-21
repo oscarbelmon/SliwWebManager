@@ -17,6 +17,10 @@ import java.util.List;
 @Component
 public class ElasticsearchPopulator {
 
+    private static final boolean POPULATE_ON_BOOT = false;
+    private static final int NUM_USERS_TO_POPULATE = 128;
+    private static final int NUM_DEVICES_TO_POPULATE = 256;
+
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
 
@@ -35,24 +39,34 @@ public class ElasticsearchPopulator {
     @PostConstruct
     public void init() {
 
-        long userCount = userRepository.count();
-        if (userCount == 0) {
-            List<User> users = new ArrayList<>();
-            for (int i = 0; i < 128; i++) {
-                users.add(userGenerator.generate());
-            }
-            userRepository.save(users);
+        if (POPULATE_ON_BOOT) {
+
+            long userCount = userRepository.count();
+            if (userCount == 0)
+                populateUsers(NUM_USERS_TO_POPULATE);
+
+            long deviceCount = deviceRepository.count();
+            if (deviceCount == 0)
+                populateDevices(NUM_DEVICES_TO_POPULATE);
+
         }
 
-        long deviceCount = deviceRepository.count();
-        if (deviceCount == 0) {
-            List<Device> devices = new ArrayList<>();
-            for (int i = 0; i < 256; i++) {
-                devices.add(deviceGenerator.generate());
-            }
-            deviceRepository.save(devices);
-        }
+    }
 
+    private void populateUsers(int numUsersToPopulate) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < numUsersToPopulate; i++) {
+            users.add(userGenerator.generate());
+        }
+        userRepository.save(users);
+    }
+
+    private void populateDevices(int numDevicesToPopulate) {
+        List<Device> devices = new ArrayList<>();
+        for (int i = 0; i < numDevicesToPopulate; i++) {
+            devices.add(deviceGenerator.generate());
+        }
+        deviceRepository.save(devices);
     }
 
 }
