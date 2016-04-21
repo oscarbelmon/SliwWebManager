@@ -40,8 +40,6 @@ public class DevicesController {
                        @RequestParam(required = false, defaultValue = "id,asc") String sort,
                        @RequestParam(required = false, defaultValue = "") String filter) {
 
-        System.out.println("page="+page+"&size="+size+"&sort="+sort+"&filter="+filter);
-
         String[] sortd = sort.split(",");
         String propertie = sortd[0];
         String direction = sortd[1];
