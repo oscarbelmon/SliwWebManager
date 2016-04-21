@@ -21,22 +21,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
 
+    @Autowired
+    ElasticsearchQueryBuilder elasticsearchQueryBuilder;
+
     @Override
     public Page<User> findByNameWithHighlight(Pageable pageable, String filter) {
 
         String[] fields = new String[] { "name" };
 
-        QueryBuilder queryBuilder = new MultiMatchQueryBuilder(filter, fields)
-                .operator(MatchQueryBuilder.Operator.AND);
-
-        HighlightBuilder.Field[] highlightFields = Arrays.stream(fields)
-                .map(HighlightBuilder.Field::new)
-                .toArray(HighlightBuilder.Field[]::new);
-
-        SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(queryBuilder)
-                .withHighlightFields(highlightFields)
-                .build().setPageable(pageable);
+        SearchQuery query = elasticsearchQueryBuilder.buildMultiMathQueryWithHighlightFields(filter, fields);
+        query.setPageable(pageable);
 
         Page<User> page = elasticsearchTemplate.queryForPage(query, User.class, new UserHighlightSearchResultMapper());
         return page;

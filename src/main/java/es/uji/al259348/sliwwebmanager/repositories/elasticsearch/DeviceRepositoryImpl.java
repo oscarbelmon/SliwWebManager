@@ -21,22 +21,16 @@ public class DeviceRepositoryImpl implements DeviceRepositoryCustom {
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
 
+    @Autowired
+    ElasticsearchQueryBuilder elasticsearchQueryBuilder;
+
     @Override
     public Page<Device> findByMacAndNameWithHighlight(Pageable pageable, String filter) {
 
         String[] fields = new String[] { "name", "mac" };
 
-        QueryBuilder queryBuilder = new MultiMatchQueryBuilder(filter, fields)
-                .operator(MatchQueryBuilder.Operator.AND);
-
-        HighlightBuilder.Field[] highlightFields = Arrays.stream(fields)
-                .map(HighlightBuilder.Field::new)
-                .toArray(HighlightBuilder.Field[]::new);
-
-        SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(queryBuilder)
-                .withHighlightFields(highlightFields)
-                .build().setPageable(pageable);
+        SearchQuery query = elasticsearchQueryBuilder.buildMultiMathQueryWithHighlightFields(filter, fields);
+        query.setPageable(pageable);
 
         Page<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new DeviceHighlightSearchResultMapper());
         return page;
