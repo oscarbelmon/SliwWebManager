@@ -50,7 +50,7 @@ public class DevicesController {
         if (filter.isEmpty())
             devicePage = deviceService.findAll(pageable);
         else
-            devicePage = deviceService.findHighlighted(pageable, filter);
+            devicePage = deviceService.findByMacAndNameWithHighlight(pageable, filter);
 
         model.addAttribute("devicePage", devicePage);
         model.addAttribute("filter", filter);
@@ -172,7 +172,7 @@ public class DevicesController {
         if (filter.isEmpty())
             userPage = userService.findAll(pageable);
         else
-            userPage = userService.findHighlighted(pageable, filter);
+            userPage = userService.findByNameWithHighlight(pageable, filter);
 
         model.addAttribute("userPage", userPage);
         model.addAttribute("filter", filter);

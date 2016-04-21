@@ -12,6 +12,6 @@ public interface UserService {
     User findOne(String id);
 
     Page<User> findAll(Pageable pageable);
-    Page<User> findHighlighted(Pageable pageable, String filter);
+    Page<User> findByNameWithHighlight(Pageable pageable, String filter);
 
 }

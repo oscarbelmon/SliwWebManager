@@ -13,6 +13,6 @@ public interface DeviceService {
     Device findOne(String id);
 
     Page<Device> findAll(Pageable pageable);
-    Page<Device> findHighlighted(Pageable pageable, String filter);
+    Page<Device> findByMacAndNameWithHighlight(Pageable pageable, String filter);
 
 }

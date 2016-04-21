@@ -45,7 +45,7 @@ public class UsersController {
         if (filter.isEmpty())
             userPage = userService.findAll(pageable);
         else
-            userPage = userService.findHighlighted(pageable, filter);
+            userPage = userService.findByNameWithHighlight(pageable, filter);
 
         model.addAttribute("userPage", userPage);
         model.addAttribute("filter", filter);
