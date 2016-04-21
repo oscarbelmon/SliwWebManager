@@ -23,9 +23,6 @@ public class DeviceServiceImpl implements DeviceService {
     @Autowired
     DeviceRepository deviceRepository;
 
-    @Autowired
-    ElasticsearchTemplate elasticsearchTemplate;
-
     @Override
     public boolean idExists(String id) {
         Device device = deviceRepository.findOne(id);
@@ -54,25 +51,8 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Page<Device> findHighlighted(Pageable pageable, String filter) {
-
-        String[] fields = new String[] { "name", "mac" };
-
-        QueryBuilder queryBuilder = new MultiMatchQueryBuilder(filter, fields)
-                .operator(MatchQueryBuilder.Operator.AND);
-
-        HighlightBuilder.Field[] highlightFields = Arrays.stream(fields)
-                .map(HighlightBuilder.Field::new)
-                .toArray(HighlightBuilder.Field[]::new);
-
-        SearchQuery query = new NativeSearchQueryBuilder()
-                .withQuery(queryBuilder)
-                .withHighlightFields(highlightFields)
-                .build().setPageable(pageable);
-
-        Page<Device> page = elasticsearchTemplate.queryForPage(query, Device.class, new DeviceHighlightSearchResultMapper());
-
-        return page;
+    public Page<Device> findByMacAndNameWithHighlight(Pageable pageable, String filter) {
+        return deviceRepository.findByMacAndNameWithHighlight(pageable, filter);
     }
 
 }
