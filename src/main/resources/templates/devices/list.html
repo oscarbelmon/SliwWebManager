@@ -61,8 +61,8 @@
                 <table id="example" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">ID</th>
-                            <th style="width: 15%;">MAC</th>
+                            <th style="width: 30%;">ID instalación</th>
+                            <!--<th style="width: 15%;">MAC</th>-->
                             <th>Nombre</th>
                             <th style="width: 15%;">Usuario vinculado</th>
                             <th style="width: 100px;">Opciones</th>
@@ -74,7 +74,7 @@
                         </tr>
                         <tr th:each="device : ${devicePage}">
                             <td th:text="${device.id}"></td>
-                            <td th:utext="${device.mac}"></td>
+                            <!--<td th:utext="${device.mac}"></td>-->
                             <td th:utext="${device.name}"></td>
                             <td>
                                 <span class="label label-success" th:if="${(device.user != null)}">
