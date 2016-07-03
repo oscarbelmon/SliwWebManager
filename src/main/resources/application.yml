@@ -2,7 +2,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: "elasticsearch"
-      cluster-nodes: "127.0.0.1:9300"
+      cluster-nodes: "elasticsearch:9300"
 
 spring.thymeleaf.cache: false
 spring.thymeleaf.encoding: "UTF-8"
