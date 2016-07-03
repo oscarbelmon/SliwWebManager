@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:include="base :: page">
+
+<div th:fragment="content">
+
+    <ol class="breadcrumb">
+        <li><a th:href="@{/devices}">Dispositivos</a></li>
+        <li class="active">Crear dispositivo</li>
+    </ol>
+
+    <div th:replace="feedback :: feedback"></div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Crear dispositivo</h1>
+                </div>
+                <div class="panel-body">
+                    <form th:object="${deviceForm}" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="id">Id:</label>
+                                <input type="text" class="form-control" th:field="*{id}" />
+                                <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="alert alert-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mac">MAC:</label>
+                                <input type="text" class="form-control" th:field="*{mac}" autofocus="autofocus" />
+                                <div th:if="${#fields.hasErrors('mac')}" th:errors="*{mac}" class="alert alert-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Nombre:</label>
+                                <input type="text" class="form-control" th:field="*{name}" />
+                                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></div>
+                            </div>
+                            <button type="submit" class="btn btn-success">Crear</button>
+                            <a th:href="@{/devices}" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
