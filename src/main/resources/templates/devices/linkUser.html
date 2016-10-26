@@ -6,9 +6,11 @@
 <div th:fragment="content">
 
     <ol class="breadcrumb">
-        <li><a th:href="@{/devices}">Dispositivos</a></li>
+        <!--<li><a th:href="@{/devices}">Dispositivos</a></li>-->
+        <li><a th:href="@{/devices}">Devices</a></li>
         <li><a th:href="@{/devices/{id}(id=${device.id})}" th:text="${device.id}"></a></li>
-        <li class="active">Vincular usuario</li>
+        <!--<li class="active">Vincular usuario</li>-->
+        <li class="active">Link user</li>
     </ol>
 
     <div th:replace="feedback :: feedback"></div>
@@ -19,7 +21,8 @@
                 <div class="panel-heading clearfix">
                     <div class="pull-left">
                         <h1 class="panel-title">
-                            <span>Vincular usuario a </span>
+                            <!--<span>Vincular usuario a </span>-->
+                            <span>Link user to </span>
                             <i th:text="${device.name}"></i>
                         </h1>
                     </div>
@@ -41,13 +44,15 @@
                                     <option value="25" th:selected="${userPage.size==25}">25</option>
                                     <option value="50" th:selected="${userPage.size==50}">50</option>
                                 </select>
-                                <label for="size"> entradas.</label>
+                                <!--<label for="size"> entradas.</label>-->
+                                <label for="size"> entries.</label>
                             </div>
                         </div>
 
                         <div class="pull-right">
                             <div class="form-group">
-                                <label for="filter">Filtrar: </label>
+                                <!--<label for="filter">Filtrar: </label>-->
+                                <label for="filter">Filer: </label>
                                 <input type="text" id="filter" name="filter" class="form-control input-sm" th:value="${filter}" th:autofocus="${filter}" onfocus="this.value = this.value;" />
                                 <button id="btnFilter" class="btn btn-xs btn-primary" title="Filtrar">
                                     <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
@@ -63,14 +68,18 @@
                     <thead>
                         <tr>
                             <th style="width: 30%;">ID</th>
-                            <th>Nombre</th>
-                            <th style="width: 15%;">Configurado</th>
-                            <th style="width: 10%;">Opciones</th>
+                            <!--<th>Nombre</th>-->
+                            <th>Name</th>
+                            <!--<th style="width: 15%;">Configurado</th>-->
+                            <th style="width: 15%;">Configured</th>
+                            <!--<th style="width: 10%;">Opciones</th>-->
+                            <th style="width: 10%;">Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${userPage.totalElements}==0">
-                            <td colspan="5">No hay usuarios.</td>
+                            <!--<td colspan="5">No hay usuarios.</td>-->
+                            <td colspan="5">There is no users available.</td>
                         </tr>
                         <tr th:each="user : ${userPage}">
                             <td th:text="${user.id}"></td>
@@ -90,7 +99,8 @@
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                     <input type="hidden" name="userId" th:value="${user.id}" />
                                     <button class="btn btn-xs btn-primary" aria-label="Vincular" title="Vincular">
-                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Vincular
+                                        <!--<span class="glyphicon glyphicon-link" aria-hidden="true"></span> Vincular-->
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true">Link</span>
                                     </button>
                                 </form>
                             </td>

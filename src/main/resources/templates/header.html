@@ -16,10 +16,12 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/users') ? 'active':''}">
-                    <a th:href="@{/users}">Usuarios</a>
+                    <!--<a th:href="@{/users}">Usuarios</a>-->
+                    <a th:href="@{/users}">Users</a>
                 </li>
                 <li th:class="${#strings.startsWith(#httpServletRequest.getRequestURI(), '/devices') ? 'active':''}">
-                    <a th:href="@{/devices}">Dispositivos</a>
+                    <!--<a th:href="@{/devices}">Dispositivos</a>-->
+                    <a th:href="@{/devices}">Devices</a>
                 </li>
             </ul>
 
@@ -37,7 +39,8 @@
             <!--</ul>-->
 
             <div sec:authorize="isAnonymous()" class="navbar-form navbar-right">
-                <a th:href="@{/login}" class="btn btn-sm btn-success">Iniciar sesión</a>
+                <!--<a th:href="@{/login}" class="btn btn-sm btn-success">Iniciar sesión</a>-->
+                <a th:href="@{/login}" class="btn btn-sm btn-success">New session</a>
                 <!--<a th:href="@{/register}" class="btn btn-sm btn-primary">Registro</a>-->
             </div>
         </div>

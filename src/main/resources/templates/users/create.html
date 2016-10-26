@@ -6,8 +6,10 @@
 <div th:fragment="content">
 
     <ol class="breadcrumb">
-        <li><a th:href="@{/users}">Usuarios</a></li>
-        <li class="active">Crear usuario</li>
+        <!--<li><a th:href="@{/users}">Usuarios</a></li>-->
+        <li><a th:href="@{/users}">Users</a></li>
+        <!--<li class="active">Crear usuario</li>-->
+        <li class="active">New user</li>
     </ol>
 
     <div th:replace="feedback :: feedback"></div>
@@ -28,17 +30,21 @@
                                 <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="alert alert-danger"></div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Nombre:</label>
+                                <!--<label for="name">Nombre:</label>-->
+                                <label for="name">Name:</label>
                                 <input type="text" class="form-control" th:field="*{name}" autofocus="autofocus" />
                                 <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></div>
                             </div>
-                            <button type="submit" class="btn btn-success">Crear</button>
-                            <a th:href="@{/users}" class="btn btn-danger">Cancelar</a>
+                            <!--<button type="submit" class="btn btn-success">Crear</button>-->
+                            <button type="submit" class="btn btn-success">New</button>
+                            <!--<a th:href="@{/users}" class="btn btn-danger">Cancelar</a>-->
+                            <a th:href="@{/users}" class="btn btn-danger">Cancel</a>
                         </div>
                         <div class="col-md-8">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h1 class="panel-title">Lugares</h1>
+                                    <!--<h1 class="panel-title">Lugares</h1>-->
+                                    <h1 class="panel-title">Places</h1>
                                 </div>
                                 <table id="locationsTable" class="table">
                                     <tbody>
