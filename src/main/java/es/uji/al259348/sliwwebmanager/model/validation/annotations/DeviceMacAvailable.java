@@ -17,7 +17,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface DeviceMacAvailable {
 
-    String message() default "Dirección MAC ya en uso.";
+    String message() default "MAC address already in use.";
+//    String message() default "Dirección MAC ya en uso.";
 
     Class<?>[] groups() default {};
 
