@@ -5,7 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class EditDeviceForm {
 
-    @NotBlank(message = "No puede estar vacío.")
+//    @NotBlank(message = "No puede estar vacío.")
+    @NotBlank(message = "Can not be empty.")
     private String name;
 
     public EditDeviceForm() {

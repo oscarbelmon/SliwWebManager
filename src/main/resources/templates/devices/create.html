@@ -36,7 +36,8 @@
                                 <div th:if="${#fields.hasErrors('mac')}" th:errors="*{mac}" class="alert alert-danger"></div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Nombre:</label>
+                                <!--<label for="name">Nombre:</label>-->
+                                <label for="name">Name:</label>
                                 <input type="text" class="form-control" th:field="*{name}" />
                                 <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></div>
                             </div>

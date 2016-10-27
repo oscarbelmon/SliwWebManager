@@ -64,7 +64,8 @@
                                 </table>
                                 <div class="panel-footer">
                                     <div th:if="${#fields.hasErrors('locations')}" th:errors="*{locations}" class="alert alert-danger"></div>
-                                    <button id="addLocation" type="button" class="btn btn-default">Añadir lugar</button>
+                                    <!--<button id="addLocation" type="button" class="btn btn-default">Añadir lugar</button>-->
+                                    <button id="addLocation" type="button" class="btn btn-default">Add place</button>
                                 </div>
                             </div>
                         </div>
@@ -81,8 +82,10 @@
         var locationsTableBody = locationsTable.find('tbody');
         var numLocations = locationsTableBody.find('tr').length;
 
-        var inputName = $('<input type="text" class="form-control" name="locations[' + numLocations + '].name" placeholder="Nombre" />');
-        var inputConfigMsg = $('<input type="text" class="form-control" name="locations[' + numLocations + '].configMsg" placeholder="Mensaje de configuración" />');
+        <!--var inputName = $('<input type="text" class="form-control" name="locations[' + numLocations + '].name" placeholder="Nombre" />');-->
+        var inputName = $('<input type="text" class="form-control" name="locations[' + numLocations + '].name" placeholder="Name" />');
+        <!--var inputConfigMsg = $('<input type="text" class="form-control" name="locations[' + numLocations + '].configMsg" placeholder="Mensaje de configuración" />');-->
+        var inputConfigMsg = $('<input type="text" class="form-control" name="locations[' + numLocations + '].configMsg" placeholder="Configuration message" />');
 
         $('<tr></tr>').appendTo(locationsTableBody)
                 .append($('<td></td>')

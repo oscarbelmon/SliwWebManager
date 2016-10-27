@@ -9,16 +9,20 @@ import javax.validation.constraints.Pattern;
 
 public class DeviceForm {
 
-    @NotBlank(message = "No puede estar vacío.")
+//    @NotBlank(message = "No puede estar vacío.")
+    @NotBlank(message = "Can not be empty.")
     @DeviceIdAvailable
     private String id;
 
-    @NotBlank(message = "No puede estar vacío.")
-    @Pattern(regexp = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$", message = "No es una dirección MAC válida.")
+//    @NotBlank(message = "No puede estar vacío.")
+    @NotBlank(message = "Can not be empty.")
+//    @Pattern(regexp = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$", message = "No es una dirección MAC válida.")
+    @Pattern(regexp = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$", message = "This is not a valid MAC address.")
     @DeviceMacAvailable
     private String mac;
 
-    @NotBlank(message = "No puede estar vacío.")
+//    @NotBlank(message = "No puede estar vacío.")
+    @NotBlank(message = "Can not be empty.")
     private String name;
 
     public DeviceForm() {
