@@ -6,7 +6,8 @@
 <div th:fragment="content">
 
     <ol class="breadcrumb">
-        <li class="active">Dispositivos</li>
+        <!--<li class="active">Dispositivos</li>-->
+        <li class="active">Devices</li>
     </ol>
 
     <div th:replace="feedback :: feedback"></div>
@@ -68,7 +69,8 @@
                             <!--<th style="width: 30%;">ID instalación</th>-->
                             <th style="width: 30%;">Installation ID</th>
                             <!--<th style="width: 15%;">MAC</th>-->
-                            <th>Nombre</th>
+                            <!--<th>Nombre</th>-->
+                            <th>Name</th>
                             <!--<th style="width: 15%;">Usuario vinculado</th>-->
                             <th style="width: 15%;">User linked</th>
                             <!--<th style="width: 100px;">Opciones</th>-->
@@ -78,7 +80,7 @@
                     <tbody>
                         <tr th:if="${devicePage.totalElements}==0">
                             <!--<td colspan="5">No hay dispositivos.</td>-->
-                            <td colspan="5">There is no devices available.</td>
+                            <td colspan="5">There is no device available.</td>
                         </tr>
                         <tr th:each="device : ${devicePage}">
                             <td th:text="${device.id}"></td>

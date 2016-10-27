@@ -68,7 +68,7 @@
                     <tr>
                         <th style="width: 30%;">ID</th>
                         <th>Name</th>
-                        <th>Nombre</th>
+                        <!--<th>Nombre</th>-->
                         <!--<th style="width: 15%;">Configurado</th>-->
                         <th style="width: 15%;">Configuration</th>
                         <!--<th style="width: 100px;">Opciones</th>-->
@@ -78,7 +78,7 @@
                     <tbody>
                     <tr th:if="${userPage.totalElements}==0">
                         <!--<td colspan="5">No hay usuarios.</td>-->
-                        <td colspan="5">There is no users available.</td>
+                        <td colspan="5">There is no user available.</td>
                     </tr>
                     <tr th:each="user : ${userPage}">
                         <td th:text="${user.id}"></td>
