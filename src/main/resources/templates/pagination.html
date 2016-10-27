@@ -3,7 +3,8 @@
     <div th:fragment="paginationInfo"
          th:with="from=${page.number*page.size+1}, to=${from+page.numberOfElements-1}">
 
-        <p th:text="${'Mostrando '+from+' a '+to+' de '+page.totalElements+' entradas.'}"></p>
+        <!--<p th:text="${'Mostrando '+from+' a '+to+' de '+page.totalElements+' entradas.'}"></p>-->
+        <p th:text="${'Showing '+from+' to '+to+' of '+page.totalElements+' entries.'}"></p>
 
     </div>
 

@@ -114,7 +114,8 @@
                     <div class="pull-left"
                          th:with="from=${userPage.number*userPage.size+1}, to=${from+userPage.numberOfElements-1}">
 
-                        <p th:text="${'Mostrando '+from+' a '+to+' de '+userPage.totalElements+' usuarios.'}"></p>
+                        <!--<p th:text="${'Mostrando '+from+' a '+to+' de '+userPage.totalElements+' usuarios.'}"></p>-->
+                        <p th:text="${'Showing '+from+' to '+to+' of '+userPage.totalElements+' users.'}"></p>
                     </div>
 
                     <nav class="pull-right"
