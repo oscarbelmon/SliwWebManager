@@ -17,7 +17,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface UserIdAvailable {
 
-    String message() default "Identificador ya en uso.";
+//    String message() default "Identificador ya en uso.";
+    String message() default "Identifier already in use.";
 
     Class<?>[] groups() default {};
 
